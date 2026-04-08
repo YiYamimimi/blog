@@ -1,35 +1,86 @@
-import { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams, Link, useLocation } from 'react-router-dom'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
-export default function MarkdownViewer() {
+interface MarkdownViewerProps {
+  title?: string
+}
+
+function CodeBlock({ inline, className, children, ...props }: {
+  inline?: boolean
+  className?: string
+  children?: React.ReactNode
+}) {
+  const [copied, setCopied] = useState(false)
+  const match = /language-(\w+)/.exec(className || '')
+  const language = match ? match[1] : ''
+  const codeString = String(children).replace(/\n$/, '')
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(codeString)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  if (inline) {
+    return (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    )
+  }
+
+  return (
+    <div className="relative group">
+      {language && (
+        <span className="absolute top-3 left-4 text-xs text-gray-400 font-mono uppercase">
+          {language}
+        </span>
+      )}
+      <button
+        onClick={handleCopy}
+        className="absolute top-3 right-3 px-2 py-1 text-xs text-gray-400 hover:text-white bg-gray-700 hover:bg-gray-600 rounded transition-colors opacity-0 group-hover:opacity-100"
+      >
+        {copied ? '已复制' : '复制'}
+      </button>
+      <code className={className} {...props}>
+        {children}
+      </code>
+    </div>
+  )
+}
+
+export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps) {
   const { '*': docPath } = useParams()
+  const location = useLocation()
+  const stateTitle = location.state?.title
   const [content, setContent] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useState(() => {
+  useEffect(() => {
     if (!docPath) {
       setError('未指定文档路径')
       setLoading(false)
       return
     }
 
-    fetch(`/${docPath}`)
+    fetch(`/docs/${docPath}`)
       .then((res) => {
         if (!res.ok) throw new Error('文档加载失败')
         return res.text()
       })
       .then((text) => {
-        setContent(text)
+        const cleanContent = text.replace(/^---\n[\s\S]*?\n---\n/, '')
+        setContent(cleanContent)
         setLoading(false)
       })
       .catch((err) => {
         setError(err.message)
         setLoading(false)
       })
-  })
+  }, [docPath])
 
   if (loading) {
     return (
@@ -58,7 +109,8 @@ export default function MarkdownViewer() {
     )
   }
 
-  const title = docPath?.split('/').pop()?.replace('.md', '').replace(/-/g, ' ') || '文档'
+  const fallbackTitle = docPath?.split('/').pop()?.replace('.md', '').replace(/-/g, ' ') || '文档'
+  const title = propTitle || stateTitle || fallbackTitle
 
   return (
     <div className="min-h-screen bg-bg-primary relative">
@@ -68,7 +120,7 @@ export default function MarkdownViewer() {
 
       <div className="max-w-[min(90vw,800px)] mx-auto px-6 py-10 relative">
         <Link
-          to="/"
+          to="/blog"
           className="inline-flex items-center gap-1.5 text-text-secondary hover:text-accent-warm transition-colors mb-8"
           style={{
             fontFamily: 'var(--font-body)',
@@ -91,7 +143,14 @@ export default function MarkdownViewer() {
         <div className="accent-line mb-10" style={{ margin: '0 0 2.5rem 0' }} />
 
         <article className="markdown-body">
-          <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              code: CodeBlock,
+            }}
+          >
+            {content}
+          </Markdown>
         </article>
       </div>
     </div>

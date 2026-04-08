@@ -56,11 +56,10 @@ export default function BlogList() {
             <button
               key={tag}
               onClick={() => setActiveTag((prev) => (prev === tag ? null : tag))}
-              className={`px-4 py-1.5 rounded border cursor-pointer transition-all duration-300 ${
-                activeTag === tag
-                  ? 'bg-accent-green text-white border-accent-green'
-                  : 'bg-tag-bg border-accent-green text-tag-text hover:bg-accent-green hover:text-white'
-              }`}
+              className={`px-4 py-1.5 rounded border cursor-pointer transition-all duration-300 ${activeTag === tag
+                ? 'bg-accent-green text-white border-accent-green'
+                : 'bg-tag-bg border-accent-green text-tag-text hover:bg-accent-green hover:text-white'
+                }`}
               style={{
                 fontFamily: 'var(--font-body)',
                 fontSize: 'clamp(0.7rem, 1vw, 0.875rem)',
@@ -81,7 +80,7 @@ export default function BlogList() {
               key={project.id}
               className={`bg-white/90 border border-gray-100 rounded-lg p-6 shadow-[0_2px_12px_rgba(0,0,0,0.08)] relative overflow-hidden transition-all duration-500 hover:shadow-[0_4px_20px_rgba(0,0,0,0.12)] hover:-translate-y-1 cursor-pointer group ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
               style={{ transitionDelay: `${300 + index * 100}ms` }}
-              onClick={() => navigate(project.docPath)}
+              onClick={() => navigate(project.docPath, { state: { title: project.title } })}
             >
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.tags.map((tag) => (

@@ -53,10 +53,17 @@ export default function Header({ onTagClick }: HeaderProps) {
       </div>
 
       <div className={`relative flex flex-wrap justify-center gap-3 transition-all duration-700 delay-400 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-        {['React', 'Vue', 'TypeScript', '性能优化', '用户体验', '算法思维'].map((tag, index) => (
+        {[
+          { tag: 'Vue 3 生态', key: 'Vue' },
+          { tag: 'React 技术栈', key: 'React' },
+          { tag: 'TypeScript', key: 'TypeScript' },
+          { tag: 'UniApp 跨端', key: 'UniApp' },
+          { tag: 'Vite 构建', key: 'Vite' },
+          { tag: 'Git 版本控制', key: 'Git' }
+        ].map((item) => (
           <button
-            key={tag}
-            onClick={() => onTagClick?.(tag)}
+            key={item.key}
+            onClick={() => onTagClick?.(item.key)}
             className="px-4 py-1.5 bg-tag-bg border border-accent-green rounded text-tag-text cursor-pointer transition-all duration-300 hover:bg-accent-green hover:text-white"
             style={{
               fontFamily: 'var(--font-body)',
@@ -64,7 +71,7 @@ export default function Header({ onTagClick }: HeaderProps) {
               letterSpacing: '0.05em',
             }}
           >
-            {tag}
+            {item.tag}
           </button>
         ))}
       </div>

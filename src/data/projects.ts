@@ -8,33 +8,27 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'react-hooks',
-    title: 'React Hooks 深度解析',
-    description: '深入理解 React Hooks 的工作原理、最佳实践和常见陷阱，掌握 useState、useEffect、useContext 等核心 Hook。',
+    id: 'ai-streaming',
+    title: 'AI 流式通信实战',
+    description: '基于 SSE + fetch + ReadableStream 实现打字机效果，支持实时对话与时间戳跳转，深入讲解 OpenAI SDK 流式响应处理。',
     tags: ['React', 'TypeScript'],
-    docPath: '/docs/react/hooks.md',
+    docPath: '/docs/ai/streaming-communication.md',
   },
   {
-    id: 'vue3-composition',
-    title: 'Vue3 Composition API',
-    description: '全面学习 Vue3 Composition API，包括 ref、reactive、computed、watch 等核心概念与实战应用。',
+    id: 'file-upload',
+    title: '大文件上传方案',
+    description: '预签名 URL 直传 OSS + 分片上传，支持断点续传、进度追踪与取消控制，解决大文件上传的核心痛点。',
     tags: ['Vue', 'TypeScript'],
-    docPath: '/docs/vue/composition-api.md',
+    docPath: '/docs/engineering/file-upload.md',
   },
   {
-    id: 'typescript-advanced',
-    title: 'TypeScript 高级类型',
-    description: '探索 TypeScript 的高级类型系统，包括泛型、条件类型、映射类型、模板字面量类型等进阶用法。',
-    tags: ['TypeScript'],
-    docPath: '/docs/typescript/advanced-types.md',
+    id: 'map-trajectory',
+    title: '地图轨迹可视化',
+    description: '百度地图 + MapVGL 彩虹轨迹，实现实时追踪与多路视频并发管理，支持轨迹动态回放与视口裁剪优化。',
+    tags: ['Vue', 'TypeScript'],
+    docPath: '/docs/visualization/map-trajectory.md',
   },
-  {
-    id: 'performance-optimization',
-    title: '前端性能优化实战',
-    description: '从网络请求、资源加载、渲染性能等多个维度，系统讲解前端性能优化的策略与实践方法。',
-    tags: ['React', 'Vue', '性能优化'],
-    docPath: '/docs/react/performance.md',
-  },
+
 ]
 
-export const techTags = ['React', 'Vue', 'TypeScript', '性能优化', '用户体验', '算法思维']
+export const techTags = ['Vue', 'React', 'TypeScript', 'UniApp', 'Vite', 'Git']
