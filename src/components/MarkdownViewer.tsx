@@ -99,7 +99,7 @@ export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps
           {error || '文档未找到'}
         </div>
         <Link
-          to="/blog"
+          to="/blogList"
           className="text-accent-teal hover:text-accent-green transition-colors"
           style={{ fontFamily: 'var(--font-body)' }}
         >
@@ -120,7 +120,7 @@ export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps
 
       <div className="max-w-[min(90vw,800px)] mx-auto px-6 py-10 relative">
         <Link
-          to="/blog"
+          to="/blogList"
           className="inline-flex items-center gap-1.5 text-text-secondary hover:text-accent-warm transition-colors mb-8"
           style={{
             fontFamily: 'var(--font-body)',

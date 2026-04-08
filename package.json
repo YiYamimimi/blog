@@ -1,16 +1,16 @@
 {
-  "homepage": "https://YiYamimimi.github.io/blog",
+  "homepage": "https://yiyamimimi.github.io/blog",
   "name": "blog",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node -e \"const fs=require('fs'); fs.cpSync('docs', 'dist/docs', {recursive:true}); fs.writeFileSync('dist/.nojekyll', '')\"",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.3.1",

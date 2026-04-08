@@ -31,7 +31,7 @@ export default function BlogListCard({ title, blogs }: BlogListCardProps) {
           {blogs.map((blog) => (
             <div
               key={blog.id}
-              onClick={() => navigate(`/blog`)}
+              onClick={() => navigate(`/blogList`)}
               className="group p-3 rounded-lg border border-gray-100 hover:border-accent-green/30 transition-all duration-300 cursor-pointer relative overflow-hidden"
             >
               <div className="absolute inset-0 opacity-100 transition-opacity duration-300" style={{ background: 'radial-gradient(ellipse at center, rgba(138, 180, 108, 0.15) 0%, rgba(138, 180, 108, 0.05) 50%, transparent 100%)' }} />
