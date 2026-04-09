@@ -66,7 +66,9 @@ export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps
       return
     }
 
-    fetch(`/docs/${docPath}`)
+    const url = `/blog/docs/${docPath}`
+    console.log('Fetching:', url)
+    fetch(url)
       .then((res) => {
         if (!res.ok) throw new Error('文档加载失败')
         return res.text()
@@ -133,12 +135,12 @@ export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps
           返回首页
         </Link>
 
-        <h1
+        {/* <h1
           className="font-[var(--font-display)] font-semibold text-text-primary mb-8 capitalize"
           style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', lineHeight: '1.3' }}
         >
           {title}
-        </h1>
+        </h1> */}
 
         <div className="accent-line mb-10" style={{ margin: '0 0 2.5rem 0' }} />
 

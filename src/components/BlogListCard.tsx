@@ -10,13 +10,27 @@ interface BlogItem {
 interface BlogListCardProps {
   title: string
   blogs: BlogItem[]
+  isVisible?: boolean
 }
 
-export default function BlogListCard({ title, blogs }: BlogListCardProps) {
+export default function BlogListCard({ title, blogs, isVisible = false }: BlogListCardProps) {
   const navigate = useNavigate()
+  const goTOMore = () => {
+    navigate("/blogList")
+  }
 
   return (
-    <div className="h-full flex flex-col">
+    <div
+      className={`bg-white/95 border border-gray-100 rounded-lg p-4 lg:mt-0 lg:p-6 lg:px-8 shadow-2xl relative transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      style={{ transitionDelay: "500ms", minHeight: "300px" }}
+    >
+      <div
+        className="absolute text-xs xl:text-lg xl:text-2xl top-2 xl:-top-17 text-gray-500 xl:right-0 z-10 hover:font-bold cursor-pointer right-4 "
+        onClick={goTOMore}
+      >
+        更多博客 →
+      </div>
+      <div className="h-full flex flex-col">
       <h3
         className="font-[var(--font-display)] font-semibold text-cyan-800 mb-4"
         style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.75rem)' }}
@@ -65,8 +79,7 @@ export default function BlogListCard({ title, blogs }: BlogListCardProps) {
 
         <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white/95 to-transparent z-10 pointer-events-none" />
       </div>
-
-
+      </div>
     </div>
   )
 }

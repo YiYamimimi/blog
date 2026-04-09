@@ -1,11 +1,3 @@
----
-title: AI 流式通信实战：SSE + fetch + ReadableStream
-description: 深入讲解如何基于 OpenAI SDK 和前端流式处理技术，实现逐 token 推送的打字机效果
-author: DeepView Team
-date: 2024-01-15
-tags: [AI, SSE, React, TypeScript, Chrome Extension]
----
-
 # AI 流式通信实战：SSE + fetch + ReadableStream
 
 > **核心价值**：在开发 AI 对话应用时，流式输出是提升用户体验的关键。本文将深入讲解如何基于 OpenAI SDK 和前端流式处理技术，实现逐 token 推送的打字机效果。

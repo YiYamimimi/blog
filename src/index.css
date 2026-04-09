@@ -25,6 +25,7 @@ body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   min-height: 100vh;
+  overflow-x: hidden;
   overflow-y: scroll;
 }
 
@@ -143,13 +144,13 @@ body {
 
   0%,
   100% {
-    border-color: rgba(138, 180, 108, 0.15);
-    box-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgba(0, 0, 0, 0.25));
+    border-color: rgba(54, 56, 52, 0.15);
+    box-shadow: 0 25px 50px -15px var(--tw-shadow-color, rgba(0, 0, 0, 0.25));
   }
 
   50% {
     border-color: rgba(138, 180, 108, 0.5);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08), 0 0 90px 25px rgba(19, 39, 5, 0.2);
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08), 0 0 90px 25px rgba(19, 39, 5, 0.2);
   }
 }
 
