@@ -1,11 +1,12 @@
 interface CardContentProps {
   onCardClick?: () => void;
+  isVisible?: boolean;
 }
 
-export default function CardContent({ onCardClick }: CardContentProps) {
+export default function CardContent({ onCardClick, isVisible = true }: CardContentProps) {
   return (
     <div
-      className="card-glow bg-white/90 border border-gray-100 rounded-lg p-3 lg:p-6 lg:px-8 shadow-2xl relative transition-all duration-700 ease-out flex flex-col"
+      className={`card-glow bg-white/90 border border-gray-100 rounded-lg p-3 lg:p-6 lg:px-8 shadow-2xl relative transition-all duration-700 ease-out flex flex-col ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
       style={{ transitionDelay: "450ms" }}
     >
       <div

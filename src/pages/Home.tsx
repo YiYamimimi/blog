@@ -18,7 +18,8 @@ export default function Home() {
       <div className="max-w-[88vw] mx-auto xl:px-6 p-2 -mt-35">
         <div className="grid gap-8 xl:gap-20 mb-12 xl:mb-20 grid-cols-1 xl:grid-cols-[1.2fr_1fr] xl:items-center">
           <CardContent
-            onCardClick={() => window.open("http://106.12.6.136", "_blank")}
+            onCardClick={() => window.open("http://106.12.6.136:3000/", "_blank")}
+            isVisible={isVisible}
           />
 
           <BlogListCard
