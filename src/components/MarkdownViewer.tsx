@@ -1,7 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link, useLocation } from 'react-router-dom'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
+
+interface TocItem {
+  id: string
+  text: string
+  level: number
+}
 
 interface MarkdownViewerProps {
   title?: string
@@ -51,6 +58,25 @@ function CodeBlock({ inline, className, children, ...props }: {
   )
 }
 
+function extractToc(content: string): TocItem[] {
+  const headings: TocItem[] = []
+  const regex = /^(#{1,3})\s+(.+)$/gm
+  let match
+
+  while ((match = regex.exec(content)) !== null) {
+    const level = match[1].length
+    const text = match[2].trim()
+    const id = text
+      .toLowerCase()
+      .replace(/[^\u4e00-\u9fa5a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+
+    headings.push({ id, text, level })
+  }
+
+  return headings
+}
+
 export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps) {
   const { '*': docPath } = useParams()
   const location = useLocation()
@@ -58,6 +84,12 @@ export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps
   const [content, setContent] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [activeId, setActiveId] = useState<string>('')
+
+  const toc = useMemo(() => {
+    if (!content) return []
+    return extractToc(content)
+  }, [content])
 
   useEffect(() => {
     if (!docPath) {
@@ -83,6 +115,45 @@ export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps
         setLoading(false)
       })
   }, [docPath])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const headings = toc.map(item => ({
+        id: item.id,
+        element: document.getElementById(item.id)
+      }))
+
+      for (let i = headings.length - 1; i >= 0; i--) {
+        const heading = headings[i]
+        if (heading.element) {
+          const rect = heading.element.getBoundingClientRect()
+          if (rect.top <= 100) {
+            setActiveId(heading.id)
+            return
+          }
+        }
+      }
+      if (headings.length > 0) {
+        setActiveId(headings[0].id)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [toc])
+
+  const scrollToHeading = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      const offset = 80
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - offset
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }
 
   if (loading) {
     return (
@@ -120,6 +191,33 @@ export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps
       <div className="abstract-shape shape-2" />
       <div className="vertical-line" />
 
+      {toc.length > 0 && (
+        <nav className="fixed right-8 top-32 w-48 hidden xl:block">
+          <div className="text-xs text-text-secondary mb-3 uppercase tracking-wider" style={{ fontFamily: 'var(--font-body)' }}>
+            目录
+          </div>
+          <ul className="space-y-1.5 border-l border-gray-200">
+            {toc.map((item) => (
+              <li key={item.id}>
+                <button
+                  onClick={() => scrollToHeading(item.id)}
+                  className={`text-left text-sm py-1 pl-3 transition-colors w-full truncate ${activeId === item.id
+                      ? 'text-accent-green border-l-2 border-accent-green -ml-px pl-2.5'
+                      : 'text-text-secondary hover:text-accent-warm'
+                    }`}
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    paddingLeft: `${(item.level - 1) * 12 + 12}px`
+                  }}
+                >
+                  {item.text}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
       <div className="max-w-[min(90vw,800px)] mx-auto px-6 py-10 relative">
         <Link
           to="/blogList"
@@ -135,20 +233,29 @@ export default function MarkdownViewer({ title: propTitle }: MarkdownViewerProps
           返回首页
         </Link>
 
-        {/* <h1
-          className="font-[var(--font-display)] font-semibold text-text-primary mb-8 capitalize"
-          style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', lineHeight: '1.3' }}
-        >
-          {title}
-        </h1> */}
-
         <div className="accent-line mb-10" style={{ margin: '0 0 2.5rem 0' }} />
 
         <article className="markdown-body">
           <Markdown
             remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeHighlight]}
             components={{
               code: CodeBlock,
+              h1: ({ children }) => {
+                const text = String(children)
+                const id = text.toLowerCase().replace(/[^\u4e00-\u9fa5a-z0-9\s-]/g, '').replace(/\s+/g, '-')
+                return <h1 id={id}>{children}</h1>
+              },
+              h2: ({ children }) => {
+                const text = String(children)
+                const id = text.toLowerCase().replace(/[^\u4e00-\u9fa5a-z0-9\s-]/g, '').replace(/\s+/g, '-')
+                return <h2 id={id}>{children}</h2>
+              },
+              h3: ({ children }) => {
+                const text = String(children)
+                const id = text.toLowerCase().replace(/[^\u4e00-\u9fa5a-z0-9\s-]/g, '').replace(/\s+/g, '-')
+                return <h3 id={id}>{children}</h3>
+              },
             }}
           >
             {content}

@@ -10,9 +10,16 @@ export const projects: Project[] = [
   {
     id: 'ai-streaming',
     title: 'AI 流式通信实战',
-    description: '基于 SSE + fetch + ReadableStream 实现打字机效果，支持实时对话与时间戳跳转，深入讲解 OpenAI SDK 流式响应处理。',
+    description: '基于 OpenAI SDK 流式响应处理 和 Markdown 增量渲染优化 实现打字机效果，支持实时对话与时间戳跳转。',
     tags: ['React', 'TypeScript'],
     docPath: '/docs/ai/streaming-communication.md',
+  },
+  {
+    id: 'canvas-drag',
+    title: 'Canvas 绘制和拖拽方框',
+    description: '使用 Canvas 在图片上绘制和拖拽方框',
+    tags: ['React', 'TypeScript'],
+    docPath: '/docs/engineering/canvas-drag.md',
   },
   {
     id: 'file-upload',
