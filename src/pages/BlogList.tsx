@@ -45,7 +45,7 @@ export default function BlogList() {
             className="text-text-secondary leading-relaxed mb-10"
             style={{ fontSize: 'clamp(0.9rem, 1.2vw, 1.1rem)' }}
           >
-            记录前端开发中的思考与实践，分享技术成长路上的点滴收获。
+            记录开发中的思考与实践，分享技术成长路上的点滴收获。
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export default function BlogList() {
           className="text-text-secondary"
           style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.7rem, 0.9vw, 0.85rem)' }}
         >
-          © 2026 yiyamimimi · 前端开发工程师
+          © 2026 yiyamimimi · 开发工程师
         </p>
       </footer>
     </div>

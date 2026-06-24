@@ -28,7 +28,7 @@ export default function Header({ onTagClick }: HeaderProps) {
         <div className={`accent-line mb-6 transition-all duration-700 delay-200 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
 
         <div className="flex justify-center gap-3 mb-10 mt-2">
-          <p
+          {/* <p
             className={`relative text-center text-gray-400 font-[var(--font-body)] transition-all duration-700 delay-300 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', letterSpacing: '0.05em' }}
           >
@@ -38,8 +38,8 @@ export default function Header({ onTagClick }: HeaderProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11v-2a4 4 0 00-3-3.87" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 17h-2" />
             </svg>
-            前端开发工程师
-          </p>
+            开发工程师
+          </p> */}
           <p
             className={`relative text-center text-gray-400 font-[var(--font-body)] transition-all duration-700 delay-350 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1.15rem)', letterSpacing: '0.03em' }}
@@ -47,7 +47,7 @@ export default function Header({ onTagClick }: HeaderProps) {
             <svg className="inline-block w-5 h-5 mb-0.5 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            2年经验
+            2年开发经验
           </p>
         </div>
       </div>
@@ -79,10 +79,11 @@ export default function Header({ onTagClick }: HeaderProps) {
         {[
           { tag: 'Vue 3 生态', key: 'Vue' },
           { tag: 'React 技术栈', key: 'React' },
-          { tag: 'TypeScript', key: 'TypeScript' },
-          { tag: 'UniApp 跨端', key: 'UniApp' },
+          { tag: 'Node.js 全栈', key: 'nodejs' },
+          { tag: 'RAG 检索', key: 'RAG' },
+          { tag: 'AI Agent', key: 'AI' },
           { tag: 'Vite 构建', key: 'Vite' },
-          { tag: 'Git 版本控制', key: 'Git' }
+
         ].map((item) => (
           <button
             key={item.key}
